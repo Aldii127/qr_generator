@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <title>QR Code Generator</title>
@@ -68,7 +68,6 @@
       max-width: 400px;
       text-align: center;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-      transition: 0.3s ease-in-out;
     }
 
     h1 {
@@ -145,43 +144,38 @@
       cursor: not-allowed;
     }
 
-    #qr-code {
-      display: flex;
-      justify-content: center;
-      animation: fadeIn 0.4s ease;
+    #qr-wrapper {
+      display: none;
+      margin-bottom: 15px;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    #qr-code {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      display: inline-block;
     }
 
     .notification {
       background: #0f172a;
       border-left: 4px solid #38bdf8;
       padding: 10px;
-      margin-top: 10px;
       font-size: 13px;
       border-radius: 6px;
       display: none;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <!-- Ikon user pojok kanan atas -->
+
   <div class="user-icon" title="Created by Aldi">
     <svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 0 24 24" fill="#38bdf8">
       <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
     </svg>
   </div>
 
-  <!-- QR Code Generator -->
   <div class="container">
     <h1>QR Code Generator</h1>
     <div class="input-group">
@@ -192,17 +186,19 @@
       <button id="generate-btn">Generate</button>
       <button id="download-btn" disabled>Download</button>
     </div>
-    <div id="qr-code"></div>
+    <div id="qr-wrapper">
+      <div id="qr-code"></div>
+    </div>
     <div id="notification" class="notification">QR code berhasil dibuat!</div>
   </div>
 
-  <!-- Library QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
     const input = document.getElementById("qr-input");
     const generateBtn = document.getElementById("generate-btn");
     const downloadBtn = document.getElementById("download-btn");
     const qrCodeDiv = document.getElementById("qr-code");
+    const qrWrapper = document.getElementById("qr-wrapper");
     const notif = document.getElementById("notification");
     let qr;
 
@@ -224,6 +220,8 @@
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H,
       });
+
+      qrWrapper.style.display = "block";
 
       setTimeout(() => {
         downloadBtn.disabled = false;
